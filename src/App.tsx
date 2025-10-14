@@ -190,6 +190,7 @@ function App() {
   return (
     <div className={`invitation-container ${animateContent ? 'fade-in' : ''}`}>
       <div className="vintage-border">
+        <img src="./src/assets/ballon.png" alt="Праздничный шарик" className="balloon-image" />
         <div className="invitation-card animate-elements">
           <div className="ornament top"></div>
           

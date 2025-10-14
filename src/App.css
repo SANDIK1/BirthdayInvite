@@ -42,7 +42,9 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f8f8f8;
+  background-image: url('/src/assets/bg.jpg');
+  background-size: cover;
+  background-position: center;
   perspective: 1200px;
 }
 
@@ -262,7 +264,10 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f5f5f5;
+    background-image: url('/src/assets/bg.jpg');
+    
+      background-size: cover;
+      background-position: center;
   padding: 20px;
   opacity: 0;
   transition: opacity 1s ease;
@@ -281,6 +286,21 @@
   position: relative;
 }
 
+.balloon-image {
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 300px;
+  height: auto;
+  z-index: 10;
+}
+@media (max-width: 600px) {
+  .balloon-image {
+    width: 120px;
+    top: 100px;
+    right: -10px;
+  }
+}
 .invitation-card {
   background-color: #fff;
   border: 1px solid #000;
