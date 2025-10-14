@@ -112,6 +112,21 @@ function App() {
       // Очистка всех ресурсов при размонтировании компонента
       if (marker) {
         marker.destroy();
+        const emojiIcon = `
+            <svg fill="#0066ff" width="60" height="90" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+              <!-- Маркер -->
+              <path d="M956.952 0c-362.4 0-657 294.6-657 656.88 0 180.6 80.28 347.88 245.4 511.56 239.76 237.96 351.6 457.68 351.6 691.56v60h120v-60c0-232.8 110.28-446.16 357.6-691.44 165.12-163.8 245.4-331.08 245.4-511.68 0-362.28-294.6-656.88-663-656.88" fill-rule="evenodd"/>
+              
+              <!-- Круг для смайлика -->
+              <circle cx="960" cy="650" r="550" fill="white" />
+              
+              <!-- Смайлик -->
+              <text x="960" y="750" font-size="700" text-anchor="middle" alignment-baseline="middle">🥳</text>
+            </svg>`;
+            
+            // Конвертируем SVG в data URL
+            const svgBlob = new Blob([emojiIcon], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(svgBlob);
         // Освобождаем URL объект
         const blobUrl = url;
         if (typeof blobUrl === 'string') {
