@@ -220,6 +220,7 @@
   text-align: center;
   max-width: 70%;
   padding: 10px;
+  text-wrap: nowrap;
   position: relative;
   z-index: 1000;
   margin: 0 auto;
@@ -288,33 +289,53 @@
 
 .balloon-image2 {
   position: absolute;
-  top: 550px;
+  top: 580px;
   right: 550px;
   width: 180px;
   height: auto;
-  z-index: 10;
+  z-index: 100; /* Higher z-index to ensure visibility */
+}
+
+/* Media queries for different screen sizes */
+@media (max-width: 768px) {
+  .balloon-image2 {
+    bottom: 8vh;
+    right: 4vw;
+  }
 }
 
 @media (max-width: 600px) {
   .balloon-image2 {
-    width: 120px;
-    top: 550px;
-    right: 280px;
+    bottom: 140vh;
+      right: 68vw;
+      width: 25vw;
+    
   }
 }
+
+/* Extra small screens like 364x680 */
+@media (max-width: 380px) {
+  .balloon-image2 {
+    bottom: 220vh;
+    right: 65vw;
+    width: 25vw;
+    min-width: 45px;
+  }
+}
+
 .balloon-image {
   position: absolute;
-  top: -50px;
-  right: -50px;
-  width: 300px;
+  top: 150px;
+  right: 9px;
+  width: 180px;
   height: auto;
   z-index: 10;
 }
 @media (max-width: 600px) {
   .balloon-image {
     width: 120px;
-    top: 100px;
-    right: -10px;
+    top: 160px;
+    right: -20px;
   }
 }
 .invitation-card {
@@ -347,12 +368,27 @@
 /* Ornamental elements */
 .ornament {
   position: relative;
-  height: 30px;
+   /* Adjusted height for the ornament */
   width: 100%;
-  margin: 10px 0;
+  margin: 15px 0;
 }
 
-.ornament.top::before, .ornament.top::after,
+/* Reset the previous ornament styles for top */
+.ornament.top::before, .ornament.top::after {
+  content: none;
+}
+
+/* Create the decorative ornament using the image */
+.ornament.top {
+  position: relative;
+  background-image: url('./assets/ornament.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain; /* Use contain to ensure the full image is visible */
+  height: 80px; /* Adjust the height as needed based on the image */
+}
+
+/* Keep the bottom ornament styles as they were */
 .ornament.bottom::before, .ornament.bottom::after {
   content: '';
   position: absolute;
@@ -362,19 +398,13 @@
   top: 50%;
 }
 
-.ornament.top::before, .ornament.bottom::before {
+.ornament.bottom::before {
   left: 0;
-}
-
-.ornament.top::after, .ornament.bottom::after {
-  right: 0;
-}
-
-.ornament.top::before, .ornament.bottom::before {
   background: linear-gradient(to right, transparent, #000);
 }
 
-.ornament.top::after, .ornament.bottom::after {
+.ornament.bottom::after {
+  right: 0;
   background: linear-gradient(to left, transparent, #000);
 }
 
@@ -472,6 +502,7 @@ font-family: 'Mon', serif;
 .address {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.1rem;
+  text-wrap: nowrap;
   margin-top: 5px;
   font-style: italic;
 }
@@ -498,7 +529,7 @@ font-family: 'Mon', serif;
 
 .rsvp-title {
   font-family: 'Mon', serif;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   margin-bottom: 25px;
   text-align: center;
 }

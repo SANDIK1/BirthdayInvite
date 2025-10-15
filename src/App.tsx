@@ -8,11 +8,9 @@ function App() {
   const [showInvitation, setShowInvitation] = useState(false)
   const [animateContent, setAnimateContent] = useState(false)
   // RSVP form state
-  const [fullName, setFullName] = useState('')
-  const [notAlone, setNotAlone] = useState(false)
-  const [guestCount, setGuestCount] = useState('')
+  const [willAttend, setWillAttend] = useState('')
+  const [companions, setCompanions] = useState('')
   const [alcoholPreference, setAlcoholPreference] = useState('')
-  const [attendance, setAttendance] = useState('')
   const [formSubmitted, setFormSubmitted] = useState(false)
 
   const openEnvelope = () => {
@@ -214,7 +212,7 @@ function App() {
           </div>
           
           <div className="invitation-content">
-            <div className="invitation-text">с честью приглашает Вас разделить радость особенного события</div>
+            <div className="invitation-text">Приглашает вас разделить радость особенного события</div>
             <div className="details">
               <div className="detail-item">
                 <div className="detail-label">Дата</div>
@@ -237,7 +235,7 @@ function App() {
           </div>
 
           <div className="rsvp">
-            <h2 className="rsvp-title">Подтвердите ваше присутствие</h2>
+            <h2 className="rsvp-title">Дорогой друг, ответь, пожалуйста на несколько вопросов</h2>
             
             {!formSubmitted ? (
               <form className="rsvp-form" onSubmit={(e) => {
@@ -245,91 +243,62 @@ function App() {
                 setFormSubmitted(true);
                 // Here you would typically send the form data to a server
                 console.log({
-                  fullName,
-                  notAlone,
-                  guestCount: notAlone ? guestCount : null,
-                  alcoholPreference,
-                  attendance
+                  willAttend,
+                  companions,
+                  alcoholPreference
                 });
               }}>
-                <div className="form-group">
-                  <label htmlFor="fullName">Ваше имя и фамилия</label>
-                  <input 
-                    type="text" 
-                    id="fullName" 
-                    value={fullName} 
-                    onChange={(e) => setFullName(e.target.value)} 
-                    required 
-                    className="form-control"
-                    placeholder="Введите ваше имя и фамилию"
-                  />
-                </div>
-                
-                <div className="form-group checkbox-group">
-                  
-                  <label htmlFor="notAlone"><input 
-                    type="checkbox" 
-                    id="notAlone" 
-                    checked={notAlone} 
-                    onChange={() => setNotAlone(!notAlone)} 
-                    className="form-checkbox"
-                  />Приду не один</label>
-                </div>
-                
-                {notAlone && (
-                  <div className="form-group guest-count">
-                    <label htmlFor="guestCount">Сколько вас человек?</label>
-                    <input 
-                      type="number" 
-                      id="guestCount" 
-                      value={guestCount} 
-                      onChange={(e) => setGuestCount(e.target.value)} 
-                      min="2" 
-                      required={notAlone} 
-                      className="form-control"
-                      placeholder="Укажите количество гостей"
-                    />
-                  </div>
-                )}
-                
-                <div className="form-group">
-                  <label htmlFor="alcoholPreference">Ваши предпочтения по алкоголю</label>
-                  <textarea 
-                    id="alcoholPreference" 
-                    value={alcoholPreference} 
-                    onChange={(e) => setAlcoholPreference(e.target.value)} 
-                    className="form-control"
-                    placeholder="Напишите ваши предпочтения по алкоголю"
-                  />
-                </div>
-                
                 <div className="form-group radio-group">
+                  <label>Я приду</label>
                   <div className="radio-option">
                     <input 
                       type="radio" 
                       id="willCome" 
-                      name="attendance" 
-                      value="Приду" 
-                      checked={attendance === "Приду"} 
-                      onChange={() => setAttendance("Приду")} 
+                      name="willAttend" 
+                      value="Да" 
+                      checked={willAttend === "Да"} 
+                      onChange={() => setWillAttend("Да")} 
                       required 
                       className="form-radio"
                     />
-                    <label htmlFor="willCome">Приду</label>
+                    <label htmlFor="willCome">Да</label>
                   </div>
                   
                   <div className="radio-option">
                     <input 
                       type="radio" 
                       id="wontCome" 
-                      name="attendance" 
-                      value="Не получится" 
-                      checked={attendance === "Не получится"} 
-                      onChange={() => setAttendance("Не получится")} 
+                      name="willAttend" 
+                      value="Нет" 
+                      checked={willAttend === "Нет"} 
+                      onChange={() => setWillAttend("Нет")} 
                       className="form-radio"
                     />
-                    <label htmlFor="wontCome">Не получится прийти</label>
+                    <label htmlFor="wontCome">Нет</label>
                   </div>
+                </div>
+                
+                <div className="form-group">
+                  <label htmlFor="companions">Я буду в компании с</label>
+                  <input 
+                    type="text" 
+                    id="companions" 
+                    value={companions} 
+                    onChange={(e) => setCompanions(e.target.value)} 
+                    className="form-control"
+                    placeholder="Укажите имена ваших спутников"
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label htmlFor="alcoholPreference">Из алкогольных напитков предпочитаю</label>
+                  <textarea 
+                    id="alcoholPreference" 
+                    value={alcoholPreference} 
+                    onChange={(e) => setAlcoholPreference(e.target.value)} 
+                    className="form-control"
+                    placeholder="Укажите ваши предпочтения по алкогольным напиткам"
+                  />
                 </div>
                 
                 <button type="submit" className="submit-btn">Отправить</button>
