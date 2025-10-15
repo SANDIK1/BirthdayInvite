@@ -1,11 +1,19 @@
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import { load } from '@2gis/mapgl'
+import  ballons  from './assets/ballon.png'
 
 function App() {
   const mapContainer = useRef<HTMLDivElement>(null)
   const [showInvitation, setShowInvitation] = useState(false)
   const [animateContent, setAnimateContent] = useState(false)
+  // RSVP form state
+  const [fullName, setFullName] = useState('')
+  const [notAlone, setNotAlone] = useState(false)
+  const [guestCount, setGuestCount] = useState('')
+  const [alcoholPreference, setAlcoholPreference] = useState('')
+  const [attendance, setAttendance] = useState('')
+  const [formSubmitted, setFormSubmitted] = useState(false)
 
   const openEnvelope = () => {
     const envelope = document.querySelector('.envelope') as HTMLElement
@@ -190,7 +198,8 @@ function App() {
   return (
     <div className={`invitation-container ${animateContent ? 'fade-in' : ''}`}>
       <div className="vintage-border">
-        <img src="./src/assets/ballon.png" alt="Праздничный шарик" className="balloon-image" />
+        <img src={ballons} alt="Праздничный шарик" className="balloon-image" />
+        <img src={ballons} alt="Праздничный шарик" className="balloon-image2" />
         <div className="invitation-card animate-elements">
           <div className="ornament top"></div>
           
@@ -199,24 +208,24 @@ function App() {
             <div className="divider"></div>
             <div className="age-container">
               <div className="age">50</div>
-              <div className="years">ЛЕТ</div>
+              <div className="years">Лет</div>
             </div>
-            <h1 className="name">ИГОРЬ КОСЬЯНЕНКО</h1>
+            <h1 className="name">Игорь Косьяненко</h1>
           </div>
           
           <div className="invitation-content">
             <div className="invitation-text">с честью приглашает Вас разделить радость особенного события</div>
             <div className="details">
               <div className="detail-item">
-                <div className="detail-label">ДАТА</div>
+                <div className="detail-label">Дата</div>
                 <div className="detail-value">22 ноября 2025</div>
               </div>
               <div className="detail-item">
-                <div className="detail-label">ВРЕМЯ</div>
-                <div className="detail-value">18:00</div>
+                <div className="detail-label">Время</div>
+                <div className="detail-value">17:00</div>
               </div>
               <div className="detail-item">
-                <div className="detail-label">МЕСТО</div>
+                <div className="detail-label">Место</div>
                 <div className="detail-value">Ресторан "Старый капитан"</div>
                 <div className="address">ул. Народный проспект, д. 28</div>
               </div>
@@ -228,8 +237,108 @@ function App() {
           </div>
 
           <div className="rsvp">
-            <div className="rsvp-text">Подтвердите, пожалуйста, Ваше присутствие до 10 октября</div>
-            <div className="rsvp-contact">+7 (999) 123-45-67</div>
+            <h2 className="rsvp-title">Подтвердите ваше присутствие</h2>
+            
+            {!formSubmitted ? (
+              <form className="rsvp-form" onSubmit={(e) => {
+                e.preventDefault();
+                setFormSubmitted(true);
+                // Here you would typically send the form data to a server
+                console.log({
+                  fullName,
+                  notAlone,
+                  guestCount: notAlone ? guestCount : null,
+                  alcoholPreference,
+                  attendance
+                });
+              }}>
+                <div className="form-group">
+                  <label htmlFor="fullName">Ваше имя и фамилия</label>
+                  <input 
+                    type="text" 
+                    id="fullName" 
+                    value={fullName} 
+                    onChange={(e) => setFullName(e.target.value)} 
+                    required 
+                    className="form-control"
+                    placeholder="Введите ваше имя и фамилию"
+                  />
+                </div>
+                
+                <div className="form-group checkbox-group">
+                  
+                  <label htmlFor="notAlone"><input 
+                    type="checkbox" 
+                    id="notAlone" 
+                    checked={notAlone} 
+                    onChange={() => setNotAlone(!notAlone)} 
+                    className="form-checkbox"
+                  />Приду не один</label>
+                </div>
+                
+                {notAlone && (
+                  <div className="form-group guest-count">
+                    <label htmlFor="guestCount">Сколько вас человек?</label>
+                    <input 
+                      type="number" 
+                      id="guestCount" 
+                      value={guestCount} 
+                      onChange={(e) => setGuestCount(e.target.value)} 
+                      min="2" 
+                      required={notAlone} 
+                      className="form-control"
+                      placeholder="Укажите количество гостей"
+                    />
+                  </div>
+                )}
+                
+                <div className="form-group">
+                  <label htmlFor="alcoholPreference">Ваши предпочтения по алкоголю</label>
+                  <textarea 
+                    id="alcoholPreference" 
+                    value={alcoholPreference} 
+                    onChange={(e) => setAlcoholPreference(e.target.value)} 
+                    className="form-control"
+                    placeholder="Напишите ваши предпочтения по алкоголю"
+                  />
+                </div>
+                
+                <div className="form-group radio-group">
+                  <div className="radio-option">
+                    <input 
+                      type="radio" 
+                      id="willCome" 
+                      name="attendance" 
+                      value="Приду" 
+                      checked={attendance === "Приду"} 
+                      onChange={() => setAttendance("Приду")} 
+                      required 
+                      className="form-radio"
+                    />
+                    <label htmlFor="willCome">Приду</label>
+                  </div>
+                  
+                  <div className="radio-option">
+                    <input 
+                      type="radio" 
+                      id="wontCome" 
+                      name="attendance" 
+                      value="Не получится" 
+                      checked={attendance === "Не получится"} 
+                      onChange={() => setAttendance("Не получится")} 
+                      className="form-radio"
+                    />
+                    <label htmlFor="wontCome">Не получится прийти</label>
+                  </div>
+                </div>
+                
+                <button type="submit" className="submit-btn">Отправить</button>
+              </form>
+            ) : (
+              <div className="thank-you-message">
+                <p>Спасибо за ваш ответ!</p>
+              </div>
+            )}
           </div>
           
           <div className="ornament bottom"></div>
